@@ -1,0 +1,21 @@
+---
+title: "01-Introduction"
+format: html
+editor: visual
+bibliography: references.bib
+---
+
+## 01-Introduction
+
+> And finally, for writing, it would be best to turn inward. Force
+> yourself to write and publish every day for a month. Then do it again
+> and again. You will get better. That said, there are some useful books,
+> including *Working* ([Caro 2019](https://tellingstorieswithdata.com/99-references.html#ref-caroonworking)) and *On Writing: A Memoir of the Craft* ([King 2000](https://tellingstorieswithdata.com/99-references.html#ref-stephenking)).
+
+This quote stems from the excellent book `Telling Stories with Data` by @Alexander2023 . So far, I was only reading the preface and the last chapter, where I found this advice of how to improve ones writing. So, this brings me to writing this very text. I am planning to write something about myself the coming days and hope to
+
+1.  improve my writing
+2.  order my thoughts
+3.  learn something new
+
+And as I am not a native English speaker, I hope to improve my English writing, but also my writing in general (also my German one).
