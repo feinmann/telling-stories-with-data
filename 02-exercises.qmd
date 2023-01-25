@@ -1,0 +1,41 @@
+---
+title: "02-Exercises"
+format: html
+editor: visual
+---
+
+::: {.callout-tip collapse="true"}
+## Preamble
+
+**Purpose:** Read in data from the 2022 Australian Election and make a graph of the number of seats each party won.
+
+**Author:** Matthias Berger
+
+**Email:** b1d at mailbox org
+
+**Date:** 25 January 2023
+
+**Prerequisites:** Need to know where to get Australian elections data.
+:::
+
+```{r}
+library(data.table)
+library(janitor)
+```
+
+```{r}
+set.seed(24)
+simulated_data <-
+  data.table(
+    # Use 1 through to 151 to represent each division
+    "Division" = 1:151,
+    # Randomly pick an options, with replacement, 151 times
+    "Party" = sample(
+      x = c("Liberal", "Labor", "National", "Green", "Other"),
+      size = 151,
+      replace = TRUE
+    )
+  )
+
+simulated_data
+```
