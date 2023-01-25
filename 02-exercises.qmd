@@ -18,6 +18,8 @@ editor: visual
 **Prerequisites:** Need to know where to get Australian elections data.
 :::
 
+## 1 Australian elections
+
 ```{r}
 library(data.table)
 library(janitor)
@@ -39,3 +41,83 @@ simulated_data <-
 
 simulated_data
 ```
+
+```{r}
+library(readr)
+```
+
+```{r}
+#### Read in the data ####
+raw_elections_data <-
+  read_csv(
+    file = 
+      "https://results.aec.gov.au/27966/website/Downloads/HouseMembersElectedDownload-27966.csv",
+    show_col_types = FALSE,
+    skip = 1
+  )
+
+# We have read the data from the AEC website. We may like to save
+# it in case something happens or they move it.
+write_csv(
+  x = raw_elections_data,
+  file = "data_raw/2023-01-25_australian-voting.csv"
+)
+```
+
+```{r}
+raw_elections_data <- fread("data_raw/2023-01-25_australian-voting.csv")
+```
+
+```{r}
+# Make the names easier to type
+cleaned_elections_data <-
+  clean_names(raw_elections_data)
+
+# Have a look at the first six rows
+head(cleaned_elections_data)
+```
+
+```{r}
+cleaned_elections_data <-
+  cleaned_elections_data[, .(
+    division_nm,
+    party_nm
+  )]
+
+# Have a look at the first six rows
+head(cleaned_elections_data)
+```
+
+```{r}
+setnames(
+  cleaned_elections_data, 
+  old = c("division_nm", "party_nm"),
+  new = c("division", "elected_party")
+  )
+
+head(cleaned_elections_data)
+```
+
+```{r}
+cleaned_elections_data[, unique(elected_party)]
+```
+
+```{r}
+# recode
+cleaned_elections_data[elected_party == "Australian Labor Party", elected_party := "Labor"]
+cleaned_elections_data[elected_party == "Liberal National Party of Queensland", elected_party := "Liberal"]
+cleaned_elections_data[elected_party == "The Nationals", elected_party := "Nationals"]
+cleaned_elections_data[elected_party == "The Greens", elected_party := "Greens"]
+cleaned_elections_data[elected_party == "Independent", elected_party := "Other"]
+cleaned_elections_data[elected_party == "Katter's Australian Party (KAP)", elected_party := "Other"]
+cleaned_elections_data[elected_party == "Centre Alliance", elected_party := "Other"]
+
+head(cleaned_elections_data)
+```
+```{r}
+fwrite(
+  x = cleaned_elections_data,
+  file = "data/cleaned_elections_data.csv"
+)
+```
+
