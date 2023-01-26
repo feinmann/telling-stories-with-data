@@ -23,7 +23,16 @@ editor: visual
 ```{r}
 library(data.table)
 library(janitor)
+library(ggplot2)
 ```
+
+### Plan
+
+Here sketch a drawing of the table and visualizations that you could imagine. This way you really can be surprised by the graphs that you will create based on real data. Also sketches of business processes or other information that we could be of interest for our story will be helpful. Think also about a criterium for failure or cancellation respectively.
+
+But first, let's move on to a simulation...
+
+### Simulate
 
 ```{r}
 set.seed(24)
@@ -42,23 +51,16 @@ simulated_data <-
 simulated_data
 ```
 
-```{r}
-library(readr)
-```
+
 
 ```{r}
 #### Read in the data ####
 raw_elections_data <-
-  read_csv(
-    file = 
-      "https://results.aec.gov.au/27966/website/Downloads/HouseMembersElectedDownload-27966.csv",
-    show_col_types = FALSE,
-    skip = 1
-  )
+  fread("https://results.aec.gov.au/27966/website/Downloads/HouseMembersElectedDownload-27966.csv")
 
 # We have read the data from the AEC website. We may like to save
 # it in case something happens or they move it.
-write_csv(
+fwrite(
   x = raw_elections_data,
   file = "data_raw/2023-01-25_australian-voting.csv"
 )
@@ -119,5 +121,23 @@ fwrite(
   x = cleaned_elections_data,
   file = "data/cleaned_elections_data.csv"
 )
+```
+
+```{r}
+#### Read in the data ####
+cleaned_elections_data <-
+  fread("data/cleaned_elections_data.csv")
+```
+
+```{r}
+cleaned_elections_data |>
+  ggplot(aes(x = elected_party)) +
+  geom_bar() +
+  theme_minimal() + # Make the theme neater
+  labs(
+    x = "Party",
+    y = "Number of seats"
+  ) +
+  theme_classic()# Make the labels more meaningful
 ```
 
